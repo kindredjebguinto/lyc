@@ -67,7 +67,7 @@ If Apache uses port 8080, add `:8080` after localhost in these addresses and in 
 ## 5. Test a complete job
 
 1. Register a separate customer account and add a vehicle. Book a service in the Flutter app or signed-in customer website.
-2. Select a slot. Multiple appointments can overlap while mechanic capacity remains; each occupies its full reserved service window.
+2. Select a slot. Today is selectable in Manila time. Each slot shows the number of mechanics free for the complete selected service duration. Multiple appointments can overlap while capacity remains; past starts, closed days and services ending after 5 PM are unavailable. New jobs use the sum of service estimates (minimum 30 minutes per service), without an automatic double-time allowance. Existing jobs keep their previously reserved duration.
 3. Upload a test reservation-fee proof. As Cashier or Manager, open **Payments → Proofs to verify**, compare the amount/reference with the actual transfer, and approve or reject it. An image alone does not prove a real payment.
 4. As Adviser or Manager, confirm the appointment. Assign a free mechanic from the job workspace.
 5. On the appointment date, check in the vehicle. A mechanic can start inspection only after check-in and the reserved start time.
@@ -78,6 +78,14 @@ If Apache uses port 8080, add `:8080` after localhost in these addresses and in 
 10. Check the receipt, customer service history and staff activity log.
 
 Guest website requests remain supported. Guest bookings do not have an app login; the adviser records customer quotation decisions with a consent reference and the cashier handles their payment in the job workspace. A legacy guest payment estimate is aligned with the accepted quotation only while it is unsubmitted/unverified.
+
+## Walk-in customers
+
+Managers and Service Advisers can open **Walk-in** in the staff portal (also available from Today and Schedule). Select an existing customer's vehicle, or enter a new guest's contact and vehicle details; an email/app account is optional. Select services, press **Check / refresh today's slots**, then choose **Start now** during open hours or another remaining slot today.
+
+Registering a walk-in records arrival and reserves shared mechanic capacity immediately. It does not create or require an advance reservation-fee payment. Assign the mechanic from the job workspace; inspection, customer quotation consent, final payment and release still follow the normal workflow. Existing app customers retain ownership when staff select their existing vehicle. Guests do not have to download the app.
+
+Import the updated single `lyc_database.sql` before using this feature; it adds walk-in tracking without deleting existing data. Rebuild and reinstall the updated Flutter source to see the Today shortcut and new capacity cards. Replacing PHP files alone cannot update an already installed APK.
 
 ## 6. Run the Flutter source
 
