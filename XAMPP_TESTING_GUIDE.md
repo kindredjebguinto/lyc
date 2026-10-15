@@ -1,0 +1,122 @@
+# Test Luck Yuna on XAMPP
+
+The website ZIP contains both the public/customer website and the staff admin portal. The Flutter ZIP is the customer app source, not an APK. Both use the same PHP API and database.
+
+## 1. Extract the websites
+
+Use XAMPP with PHP 8.2 or newer, mysqli and MariaDB enabled. Extract `LYC-Websites-XAMPP.zip` into `C:\xampp\htdocs\` so the result is:
+
+```
+C:\xampp\htdocs\Vehicle-Service-System\
+    vehicle-service-management\
+    vehicle-service-management-admin\
+    XAMPP_TESTING_GUIDE.md
+```
+
+Keep the folder name `Vehicle-Service-System`; the app's base paths use it. Start Apache and MySQL in the XAMPP control panel. No npm or Composer installation is needed. Bootstrap and its icons are bundled locally, with their licenses, so the website's layout does not require a CDN connection.
+
+## 2. Import the database
+
+### Fresh local installation
+
+Open phpMyAdmin and import:
+
+`Vehicle-Service-System/vehicle-service-management/database/xampp_fresh_install.sql`
+
+It creates `vehicle_service_system`, the tables, service catalog and admin-workspace columns. It contains no seeded staff/customer accounts, tokens, vehicles, appointments or payments. Do not import the other migration files afterward; they are already included.
+
+### Updating an existing installation
+
+Back up your database and source files first. Keep the existing database; do not run the fresh-install script over it. If the previous website migrations are already installed, import only:
+
+`vehicle-service-management-admin/database/admin_workspace_upgrade.sql`
+
+For a much older installation, first apply these website migrations in order if not already applied: `mobile_api_migration.sql`, `import_complete_service_catalog.sql`, `full_workflow_upgrade_20261011.sql`, `service_selector_integration.sql`. Then import the admin workspace upgrade. The new workspace migration is repeatable on MariaDB.
+
+The default local database connection is `localhost`, database `vehicle_service_system`, user `root`, empty password. If your local XAMPP database uses different credentials, update all three connection files:
+
+- `vehicle-service-management/includes/config.php`
+- `vehicle-service-management/api/config/database.php`
+- `vehicle-service-management-admin/includes/config.php`
+
+These are local-development defaults; do not use an empty database password on a public server.
+
+## 3. Create your manager and team
+
+On the XAMPP computer, open this address in your browser:
+
+`http://localhost/Vehicle-Service-System/vehicle-service-management-admin/setup.php`
+
+Create your own manager email and password (at least 12 characters). Setup is local-only and closes after the first manager exists. There is no default manager password. For an existing database with a Manager account, sign in with that account instead.
+
+Then:
+
+1. In **Team**, add the shop's mechanics and mark them Available. A fresh database deliberately has no mechanics; customer slots remain unavailable until you add active mechanics.
+2. In **Staff access**, create adviser, cashier, mechanic or read-only staff accounts.
+3. Link each Mechanic account to its corresponding Team record. One mechanic record can be linked to one staff account. Unlinked mechanic accounts cannot access jobs.
+4. Review the supplied service catalog and prices before taking real appointments.
+
+## 4. Open the websites
+
+Public/customer website:
+
+`http://localhost/Vehicle-Service-System/vehicle-service-management/`
+
+Staff sign-in:
+
+`http://localhost/Vehicle-Service-System/vehicle-service-management-admin/login.php`
+
+API connection check:
+
+`http://localhost/Vehicle-Service-System/vehicle-service-management/api/test.php`
+
+The API should report `success: true`. If Apache uses port 8080, add `:8080` after localhost in these addresses and in Flutter's API override.
+
+## 5. Test a complete job
+
+1. Register a separate customer account and add a vehicle. Book a service in the Flutter app or signed-in customer website.
+2. Select a slot. Multiple appointments can overlap while mechanic capacity remains; each occupies its full reserved service window.
+3. Upload a test reservation-fee proof. As Cashier or Manager, open **Payments → Proofs to verify**, compare the amount/reference with the actual transfer, and approve or reject it. An image alone does not prove a real payment.
+4. As Adviser or Manager, confirm the appointment. Assign a free mechanic from the job workspace.
+5. On the appointment date, check in the vehicle. A mechanic can start inspection only after check-in and the reserved start time.
+6. As Mechanic, open the assigned job and save inspection notes. As Adviser, prepare and send the quotation.
+7. The customer accepts in the app. For an in-person/phone response, the adviser may record Accepted or Rejected with a customer-decision reference. Accepted/rejected quotations are read-only afterward so the agreed price stays consistent with billing.
+8. The final balance uses only verified, unrefunded reservation-fee credit. A fully covered bill does not ask for another transfer. Unverified/refunded fees are not automatically credited.
+9. The mechanic starts work, saves work performed and marks the vehicle ready. Cashier verifies the remaining payment. Adviser/Manager releases and completes the job once outstanding payments are resolved.
+10. Check the receipt, customer service history and staff activity log.
+
+Guest website requests remain supported. Guest bookings do not have an app login; the adviser records customer quotation decisions with a consent reference and the cashier handles their payment in the job workspace. A legacy guest payment estimate is aligned with the accepted quotation only while it is unsubmitted/unverified.
+
+## 6. Run the Flutter source
+
+Extract `LYC-Flutter-App-Source.zip` separately and open `vsm_customer` in Android Studio or VS Code. Install a Flutter SDK satisfying the existing `pubspec.yaml` requirement: Dart >=3.13.4 and <4.0.0. Check `flutter --version` first. The supplied lockfile and Android toolchain pins are preserved.
+
+From the `vsm_customer` folder:
+
+```sh
+flutter doctor
+flutter pub get --enforce-lockfile
+flutter run --dart-define=API_BASE_URL=http://10.0.2.2/Vehicle-Service-System/vehicle-service-management/api
+```
+
+`10.0.2.2` reaches the XAMPP computer from an Android Studio emulator. For a physical Android phone, connect it and the PC to the same Wi-Fi, allow Apache through the PC firewall for your local network, and use the PC's LAN address:
+
+```sh
+flutter run --dart-define=API_BASE_URL=http://YOUR_PC_LAN_IP/Vehicle-Service-System/vehicle-service-management/api
+```
+
+Do not use localhost in the phone's API address: that points to the phone itself. If Apache uses a different port, include it after the IP. Machine-specific `android/local.properties` and build caches are omitted; Flutter regenerates local configuration on your PC. Firebase push notifications remain optional and require your own Firebase project.
+
+The Flutter source is included with the earlier slot-label improvements. No APK was built, and Flutter analyzer/build/device testing was not available in the cloud environment. Native Android build compatibility still needs verification on your machine; dependency resolution may need attention if your installed SDK is older than the package requires.
+
+## Payment proofs and local upload limits
+
+Keep `uploads/payment_proofs/.htaccess` in place. Apache denies direct access to uploaded proofs; authorized Managers/Cashiers view them through the staff proof endpoint. AllowOverride must permit the supplied access rule (normal XAMPP htdocs configuration supports .htaccess).
+
+The proof form uses the actual PHP upload limit, capped at 5 MB. For 5 MB uploads, use `upload_max_filesize=5M` and `post_max_size=8M` in the XAMPP PHP configuration, then restart Apache. Make sure Apache can write to `vehicle-service-management/uploads/payment_proofs`.
+
+## What was verified
+
+PHP syntax, JavaScript syntax, public/customer layout and booking checks, staff role/access checks, scoped mechanic workflows, CSRF protection, check-in/work/payment/release workflow, quotation consent, verified-fee credit calculations, payment review/auditing and responsive admin pages passed locally. A separate fresh Apache/PHP/MariaDB installation also passed manager initialization and proof-access tests. This is evidence from Linux Apache/PHP 8.4/MariaDB 11.4, not a claim that Windows XAMPP or a Flutter device build was executed here.
+
+No real payment-provider integration, merchant QR/account details or Firebase credentials are included. Use synthetic transactions for local testing. Additional work after an accepted quotation and excess-fee refunds need separate, explicit billing review; accepted quotations cannot be silently repriced.
