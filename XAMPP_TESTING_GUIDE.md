@@ -27,11 +27,15 @@ It creates `vehicle_service_system`, the tables, service catalog and admin-works
 
 ### Updating an existing installation
 
-Back up your database and source files first. Keep the existing database; do not run the fresh-install script over it. If the previous website migrations are already installed, import only:
+Export your existing database in phpMyAdmin and back up your website files first. Keep the existing database selected, then import this ONE file:
 
-`vehicle-service-management-admin/database/admin_workspace_upgrade.sql`
+`vehicle-service-management/database/xampp_existing_database_upgrade.sql`
 
-For a much older installation, first apply these website migrations in order if not already applied: `mobile_api_migration.sql`, `import_complete_service_catalog.sql`, `full_workflow_upgrade_20261011.sql`, `service_selector_integration.sql`. Then import the admin workspace upgrade. The new workspace migration is repeatable on MariaDB.
+This includes the missing ownership columns, service categories, staff access and all required workflow migrations. It is repeatable on XAMPP MariaDB; it preserves accounts, passwords, bookings, payments and existing catalog prices. Do not import the fresh-install file into an existing database. Do not delete your database.
+
+Ownership is restored through an unambiguous customer account email and existing customer links. Records without a matching account remain unlinked for staff review; the upgrade does not guess who owns them. The earliest legacy staff account without a staff level becomes Manager; review staff access after upgrading.
+
+Replace both website folders from the updated ZIP, preserving your local database credentials and existing uploaded payment proofs. Sign out, sign in again, and hard-refresh the browser. Signed-in customers now open their dashboard from the website root; visitors see the public homepage.
 
 The default local database connection is `localhost`, database `vehicle_service_system`, user `root`, empty password. If your local XAMPP database uses different credentials, update all three connection files:
 
