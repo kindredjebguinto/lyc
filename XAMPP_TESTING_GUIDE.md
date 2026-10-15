@@ -87,6 +87,21 @@ Registering a walk-in records arrival and reserves shared mechanic capacity imme
 
 Import the updated single `lyc_database.sql` before using this feature; it adds walk-in tracking without deleting existing data. Rebuild and reinstall the updated Flutter source to see the Today shortcut and new capacity cards. Replacing PHP files alone cannot update an already installed APK.
 
+## When a job takes longer than estimated
+
+Import the updated single `vehicle-service-management/database/lyc_database.sql` before replacing the running site. It adds the schedule-change history and original-estimate/start fields while preserving existing data.
+
+In the job workspace, open **Expected finish & schedule → Extend job**. Managers, Service Advisers and the assigned Mechanic can extend a checked-in job already under inspection or service. Choose +15 to +240 minutes and enter a reason. The extension starts from the later of the existing expected finish or now, so an overdue job gets a future expected finish. The original estimate and every change remain in history.
+
+App, website and walk-in booking availability use the extended window immediately. Existing customers' appointment times remain unchanged. Capacity for a displaced booking is retained before offering new bookings. Conflicts appear on Today, Schedule and affected job workspaces, including unassigned bookings whose capacity is exhausted.
+
+A Manager or Service Adviser can open the affected booking and either:
+
+- **Reassign mechanic** while the job is still Approved. Only a mechanic free for the full service window can be used; enter a reason. The appointment time stays the same.
+- **Record an agreed new start** for a Pending/Approved booking after contacting the customer. They may agree to wait at the shop or return at another time. Record the agreed date/time, reason and customer-agreement reference (who, when and how). Capacity, opening hours and the chosen mechanic are checked again. The original appointment is retained in history and shown alongside the agreed start in customer bookings.
+
+Recorded extensions and agreed time changes create in-app notifications for linked customers. The updated Flutter source also shows expected finish and original booking details; rebuild/reinstall it to see these labels. Existing installed apps still use the updated backend capacity and notifications. Staff must phone or speak to guests themselves; no SMS, email or phone-call provider is included. Marking work **Ready for Pickup** releases mechanic capacity; payment verification and vehicle release remain separate steps. No quotation price or payment is changed by a schedule update.
+
 ## 6. Run the Flutter source
 
 Extract `LYC-Flutter-App-Source.zip` separately and open `vsm_customer` in Android Studio or VS Code. Install a Flutter SDK satisfying the existing `pubspec.yaml` requirement: Dart >=3.13.4 and <4.0.0. Check `flutter --version` first. The supplied lockfile and Android toolchain pins are preserved.
