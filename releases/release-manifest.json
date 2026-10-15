@@ -1,7 +1,7 @@
 {
   "LYC-Websites-XAMPP.zip": {
-    "sha256": "b9b061d962fd2c8ed834e8424145af70b1a2dbd9fb58146f244c0c9cd697e7d0",
-    "size_bytes": 2908233,
+    "sha256": "4336806f44eb38a268c24dc39ebdf7fd26912449d197916ea8a6ea134c8fd51d",
+    "size_bytes": 2908223,
     "files": {
       "Vehicle-Service-System/START_HERE.md": "8390bec7b6de8a43210722c6f6d9dac2a713fe275b3e0c7b53a87652be55fa27",
       "Vehicle-Service-System/vehicle-service-management-admin/assign_mechanic.php": "717335b05148fa3bd5b691186ece0ca395f35949eea2515c2186d0c78dc0712e",
@@ -101,7 +101,7 @@
       "Vehicle-Service-System/vehicle-service-management/customer/service_history.php": "9eeb67d77f2dda8778636595e6161009501f4f42b147a03c134a0f220480a7d6",
       "Vehicle-Service-System/vehicle-service-management/customer/services.php": "0f78e069ed9bde45eb76e720d016018227e9d50ab2ded6fb666129aeb4d07947",
       "Vehicle-Service-System/vehicle-service-management/customer/vehicles.php": "454d814450a378b3713b0280513acf670c0061eb5a809ae5902cd8ac2d4a6ccd",
-      "Vehicle-Service-System/vehicle-service-management/database/lyc_database.sql": "e4f7b15362af908bcb171cc8c592932daa122415edc14a8d654c3383f7471f63",
+      "Vehicle-Service-System/vehicle-service-management/database/lyc_database.sql": "c49ed9233161218d0ffc3a95d2f95ac85bd656281f7549d41d23193f4bd33c9e",
       "Vehicle-Service-System/vehicle-service-management/images/chevrolet.png": "e2dde1ccba10f1c2cbb4948e1f6a8b9f77060426238087e7e8641b4bcf812aca",
       "Vehicle-Service-System/vehicle-service-management/images/cover.png": "2fbb3923f2e8d7c59e74cc711362213f0f214feb4516eab748706b36257244fd",
       "Vehicle-Service-System/vehicle-service-management/images/ford.png": "ba5a7a7a1e60082fdfb311a7f3128f2fde785558e2f8d998dd60b00208408e1f",
