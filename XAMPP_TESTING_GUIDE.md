@@ -10,32 +10,24 @@ Use XAMPP with PHP 8.2 or newer, mysqli and MariaDB enabled. Extract `LYC-Websit
 C:\xampp\htdocs\Vehicle-Service-System\
     vehicle-service-management\
     vehicle-service-management-admin\
-    XAMPP_TESTING_GUIDE.md
+    START_HERE.md
 ```
 
 Keep the folder name `Vehicle-Service-System`; the app's base paths use it. Start Apache and MySQL in the XAMPP control panel. No npm or Composer installation is needed. Bootstrap and its icons are bundled locally, with their licenses, so the website's layout does not require a CDN connection.
 
 ## 2. Import the database
 
-### Fresh local installation
+For BOTH a fresh installation and an existing installation, import this ONE file in phpMyAdmin:
 
-Open phpMyAdmin and import:
+`Vehicle-Service-System/vehicle-service-management/database/lyc_database.sql`
 
-`Vehicle-Service-System/vehicle-service-management/database/xampp_fresh_install.sql`
+It creates `vehicle_service_system` if needed and applies all required schema updates and service catalogs. No other SQL imports are needed. A fresh installation contains no demo accounts, tokens, vehicles, bookings or payments.
 
-It creates `vehicle_service_system`, the tables, service catalog and admin-workspace columns. It contains no seeded staff/customer accounts, tokens, vehicles, appointments or payments. Do not import the other migration files afterward; they are already included.
+For an existing installation, export a database backup and back up your website folders first. The same SQL preserves existing records, passwords and catalog prices and can be imported again. Do not delete the database. Its target database is `vehicle_service_system`; if you use another name, change BOTH the CREATE DATABASE and USE lines before importing, plus your connection settings below.
 
-### Updating an existing installation
+Ownership is restored through an unambiguous customer account email and existing customer links. Unmatched records remain unlinked for staff review. The earliest legacy staff account without a staff level becomes Manager; review staff access after upgrading.
 
-Export your existing database in phpMyAdmin and back up your website files first. Keep the existing database selected, then import this ONE file:
-
-`vehicle-service-management/database/xampp_existing_database_upgrade.sql`
-
-This includes the missing ownership columns, service categories, staff access and all required workflow migrations. It is repeatable on XAMPP MariaDB; it preserves accounts, passwords, bookings, payments and existing catalog prices. Do not import the fresh-install file into an existing database. Do not delete your database.
-
-Ownership is restored through an unambiguous customer account email and existing customer links. Records without a matching account remain unlinked for staff review; the upgrade does not guess who owns them. The earliest legacy staff account without a staff level becomes Manager; review staff access after upgrading.
-
-Replace both website folders from the updated ZIP, preserving your local database credentials and existing uploaded payment proofs. Sign out, sign in again, and hard-refresh the browser. Signed-in customers now open their dashboard from the website root; visitors see the public homepage.
+Replace both website folders, preserving your local database credentials and uploaded payment proofs. Sign out and sign in again, then hard-refresh. Signed-in customers open their dashboard from the website root; visitors see the public homepage.
 
 The default local database connection is `localhost`, database `vehicle_service_system`, user `root`, empty password. If your local XAMPP database uses different credentials, update all three connection files:
 
@@ -70,11 +62,7 @@ Staff sign-in:
 
 `http://localhost/Vehicle-Service-System/vehicle-service-management-admin/login.php`
 
-API connection check:
-
-`http://localhost/Vehicle-Service-System/vehicle-service-management/api/test.php`
-
-The API should report `success: true`. If Apache uses port 8080, add `:8080` after localhost in these addresses and in Flutter's API override.
+If Apache uses port 8080, add `:8080` after localhost in these addresses and in Flutter's API override.
 
 ## 5. Test a complete job
 
