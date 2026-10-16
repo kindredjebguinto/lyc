@@ -104,7 +104,7 @@ Recorded extensions and agreed time changes create in-app notifications for link
 
 ## 6. Run the Flutter source
 
-Extract `LYC-Flutter-App-Source.zip` separately and open `vsm_customer` in Android Studio or VS Code. Install a Flutter SDK satisfying the existing `pubspec.yaml` requirement: Dart >=3.13.4 and <4.0.0. Check `flutter --version` first. The supplied lockfile and Android toolchain pins are preserved.
+Extract `LYC-Flutter-App-Source.zip` separately and open `vsm_customer` in Android Studio or VS Code. Install a Flutter SDK satisfying the existing `pubspec.yaml` requirement: Dart >=3.13.4 and <4.0.0. Check `flutter --version` first. Existing locked package versions and Android toolchain pins are preserved. Missing lockfile entries for already-declared dependencies have been completed.
 
 From the `vsm_customer` folder:
 
@@ -122,7 +122,7 @@ flutter run --dart-define=API_BASE_URL=http://YOUR_PC_LAN_IP/Vehicle-Service-Sys
 
 Do not use localhost in the phone's API address: that points to the phone itself. If Apache uses a different port, include it after the IP. Machine-specific `android/local.properties` and build caches are omitted; Flutter regenerates local configuration on your PC. Firebase push notifications remain optional and require your own Firebase project.
 
-The Flutter source is included with the earlier slot-label improvements. No APK was built, and Flutter analyzer/build/device testing was not available in the cloud environment. Native Android build compatibility still needs verification on your machine; dependency resolution may need attention if your installed SDK is older than the package requires.
+The Flutter source is included with the earlier slot-label improvements. No APK was built. The payment-proof dialog passed eight focused Flutter widget tests on Flutter 3.47.7 / Dart 3.13.5, and static analysis of its changed files passed. Android build/device testing and the native gallery-to-server upload still need verification on your machine. Native Android build compatibility still needs verification on your machine; dependency resolution may need attention if your installed SDK is older than the package requires.
 
 ## Payment proofs and local upload limits
 
@@ -135,3 +135,9 @@ The proof form uses the actual PHP upload limit, capped at 5 MB. For 5 MB upload
 PHP syntax, JavaScript syntax, public/customer layout and booking checks, staff role/access checks, scoped mechanic workflows, CSRF protection, check-in/work/payment/release workflow, quotation consent, verified-fee credit calculations, payment review/auditing and responsive admin pages passed locally. A separate fresh Apache/PHP/MariaDB installation also passed manager initialization and proof-access tests. This is evidence from Linux Apache/PHP 8.4/MariaDB 11.4, not a claim that Windows XAMPP or a Flutter device build was executed here.
 
 No real payment-provider integration, merchant QR/account details or Firebase credentials are included. Use synthetic transactions for local testing. Additional work after an accepted quotation and excess-fee refunds need separate, explicit billing review; accepted quotations cannot be silently repriced.
+
+## Payment image dialog fix
+
+The payment dialog now has a finite, scrollable content width, so the image preview and full-width buttons do not trigger Flutter's infinite-width layout assertion. To patch an existing Flutter project, replace BOTH `lib/screens/payments/booking_payment_screen.dart` and `lib/screens/payments/payment_proof_dialog.dart` from the updated source. Run `flutter pub get`, stop the running app, then run it again. No database import or PHP update is required for this dialog fix.
+
+The included regression test runs with `flutter test test/payment_proof_dialog_test.dart`. It covers image preview/submission at 320/390/768px, keyboard/large text, required fields, cancelling an open picker, oversize rejection and cash payments.
