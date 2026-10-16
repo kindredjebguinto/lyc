@@ -83,7 +83,7 @@ Guest website requests remain supported. Guest bookings do not have an app login
 
 Managers and Service Advisers can open **Walk-in** in the staff portal (also available from Today and Schedule). Select an existing customer's vehicle, or enter a new guest's contact and vehicle details; an email/app account is optional. Select services, press **Check / refresh today's slots**, then choose **Start now** during open hours or another remaining slot today.
 
-Registering a walk-in records arrival and reserves shared mechanic capacity immediately. It does not create or require an advance reservation-fee payment. Assign the mechanic from the job workspace; inspection, customer quotation consent, final payment and release still follow the normal workflow. Existing app customers retain ownership when staff select their existing vehicle. Guests do not have to download the app.
+Registering a walk-in records arrival and reserves shared mechanic capacity immediately. It does not create or require an advance reservation-fee payment. Assign the mechanic from the job workspace; inspection, customer quotation consent, final payment and release still follow the normal workflow. Existing app customers retain ownership when staff select their existing vehicle. Guests do not have to download the app. For a quotation on a booking without an app account, use **Print / Save PDF**, choose **Presented to customer**, and record Accepted or Rejected with the customer decision reference. This saves the quotation without creating an app notification for a nonexistent account. Walk-ins linked to an app account still receive in-app quotation notifications.
 
 Import the updated single `lyc_database.sql` before using this feature; it adds walk-in tracking without deleting existing data. Rebuild and reinstall the updated Flutter source to see the Today shortcut and new capacity cards. Replacing PHP files alone cannot update an already installed APK.
 
@@ -141,3 +141,7 @@ No real payment-provider integration, merchant QR/account details or Firebase cr
 The payment dialog now has a finite, scrollable content width, so the image preview and full-width buttons do not trigger Flutter's infinite-width layout assertion. To patch an existing Flutter project, replace BOTH `lib/screens/payments/booking_payment_screen.dart` and `lib/screens/payments/payment_proof_dialog.dart` from the updated source. Run `flutter pub get`, stop the running app, then run it again. No database import or PHP update is required for this dialog fix.
 
 The included regression test runs with `flutter test test/payment_proof_dialog_test.dart`. It covers image preview/submission at 320/390/768px, keyboard/large text, required fields, cancelling an open picker, oversize rejection and cash payments.
+
+## Guest walk-in quotation save fix
+
+To patch an existing installation where presenting a guest quotation fails, copy `vehicle-service-management-admin/job_quotation.php` and `vehicle-service-management-admin/includes/workspace.php` from this release. No SQL import is required for this specific fix. Guest quotations can be presented in person or as printed/PDF copies; no email or SMS provider is configured.

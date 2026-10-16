@@ -1,9 +1,9 @@
 {
   "LYC-Websites-XAMPP.zip": {
-    "sha256": "8a0450f4c6df2f74d06cec5bf8ba4c376fc05f2ce1f813203792b8ec1336c2ea",
-    "size_bytes": 2923105,
+    "sha256": "ae298317c68774094ca23628254d88b794fe75fc2acbffd402e2c9eed675385e",
+    "size_bytes": 2923740,
     "files": {
-      "Vehicle-Service-System/START_HERE.md": "712d94803a9c47ce163b6e24e303756a6012bb61d5c9ccdc252060ed9c4cae90",
+      "Vehicle-Service-System/START_HERE.md": "41aa530ea01a62cf024c13a38edbf853c7e862a6168c0241386e23f3d73e0afa",
       "Vehicle-Service-System/vehicle-service-management-admin/assign_mechanic.php": "9a583e6b46e3f7fa5b8c0eec5732d8acf0e07ea74e55e83c676029a86f5d15a3",
       "Vehicle-Service-System/vehicle-service-management-admin/audit_logs.php": "1b0d1b33e57af7a4cfa6f184a7925c93472d6875b2981fc6c5edc8e5711d5108",
       "Vehicle-Service-System/vehicle-service-management-admin/check_in.php": "01e5f7029043cb2af860cfc277afa2c615ccc69647f6818b23716930530f467e",
@@ -20,9 +20,9 @@
       "Vehicle-Service-System/vehicle-service-management-admin/includes/job_schedule.php": "e390297ad46ba262901982afcea1f536072af574fb54bcb7159d9b68bfe003ef",
       "Vehicle-Service-System/vehicle-service-management-admin/includes/job_schedule_panel.php": "651d2aab65cc4821d5255eff937f727fd2d47af58f5fcb6bc720310d68447160",
       "Vehicle-Service-System/vehicle-service-management-admin/includes/schedule_conflict_banner.php": "fd607672cfd0aa7bf322fe08f765e51eefc513050e326a519d8c04409248067f",
-      "Vehicle-Service-System/vehicle-service-management-admin/includes/workspace.php": "a8afbd02815c0921897625829bb29172f6c429fb704331b3237e97242dce1e6b",
+      "Vehicle-Service-System/vehicle-service-management-admin/includes/workspace.php": "9cf554a0d21da7041474957515823dc710fb5d080859fae3c6e3ed1f5cc84a41",
       "Vehicle-Service-System/vehicle-service-management-admin/index.php": "6c3e8a7cc82c9f2e86280133513dd8e08b842055ed4489ca9e3e5897b17fbc53",
-      "Vehicle-Service-System/vehicle-service-management-admin/job_quotation.php": "1e4c00364ad71293c4ddbe1b8dd07bcee1d2d984a9ff36b24760d27fd131e653",
+      "Vehicle-Service-System/vehicle-service-management-admin/job_quotation.php": "c903865eda7853cd26e36f65b8f7a9df96ee96733bc394f9c016a1529340f8fa",
       "Vehicle-Service-System/vehicle-service-management-admin/js/admin.js": "80ddeda8f3d4003fa2b222e19e2b2323372b9cb29159cac8babe5a12c44129ea",
       "Vehicle-Service-System/vehicle-service-management-admin/login.php": "3ecfbc3e4c80e0e9c3a4f5bbbe60e20a4a1fe60899ba37d653cdce0feb51dfb5",
       "Vehicle-Service-System/vehicle-service-management-admin/logout.php": "e874c857496bdc6354103f9993a1cc377b082616952c2c063084b5608efc6238",
@@ -159,12 +159,12 @@
     }
   },
   "LYC-Flutter-App-Source.zip": {
-    "sha256": "a03118dacc6446f93a0bc77eb5fa5719586f386311a06d1857b380e43463a115",
-    "size_bytes": 1283629,
+    "sha256": "70c0e3483607d718065753746ab6f19d9182f1745402ddcc5c6da9a96627bf4b",
+    "size_bytes": 1283855,
     "files": {
       "vsm_customer/.gitignore": "0581d23086f7283dc97d2d5bde4f60724f8115f67baa76949596790ab9800dd7",
       "vsm_customer/.metadata": "9408b5bc27585b16be048b24ea042ced88c10670b91211ca1370487238e4e323",
-      "vsm_customer/README_XAMPP.md": "712d94803a9c47ce163b6e24e303756a6012bb61d5c9ccdc252060ed9c4cae90",
+      "vsm_customer/README_XAMPP.md": "41aa530ea01a62cf024c13a38edbf853c7e862a6168c0241386e23f3d73e0afa",
       "vsm_customer/analysis_options.yaml": "98d70dd5a9033911f40e2e7f3ff9d74618e2aa13652990efe860ed0fe1cedfa9",
       "vsm_customer/android/.gitignore": "c9af75dbc2c8aa867476a09426c80b178c4aeed8b9393ae48503eedfa3273d71",
       "vsm_customer/android/app/build.gradle.kts": "fe5995e4b4d0fd94c1325baaabddb04ed5149272b7dd6ec79034a92d3f7e0be0",
