@@ -1,0 +1,41 @@
+{
+    "database_engine": "11.8.6-MariaDB-0+deb13u1 from Debian",
+    "checks": [
+        {
+            "name": "all original table rows and values preserved",
+            "passed": true
+        },
+        {
+            "name": "actual website schema guard passes",
+            "passed": true
+        },
+        {
+            "name": "7 categories seeded",
+            "passed": true
+        },
+        {
+            "name": "16 services seeded",
+            "passed": true
+        },
+        {
+            "name": "repair repeatable without duplicate catalog",
+            "passed": true
+        },
+        {
+            "name": "walk-in fee enum includes Not Required",
+            "passed": true
+        },
+        {
+            "name": "empty legacy gateway table removed",
+            "passed": true
+        },
+        {
+            "name": "actual gateway guard handles removed table",
+            "passed": true
+        },
+        {
+            "name": "nonempty gateway table and row retained",
+            "passed": true
+        }
+    ]
+}
