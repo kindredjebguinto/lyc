@@ -1,0 +1,16 @@
+Lucky Yuna HTTPS email reset test
+
+1. In Hostinger hPanel, open Websites and the Dashboard for luckyyuna.com. Under Domains > Subdomains, add auth-test.luckyyuna.com and note its document root. Wait until its SSL certificate is active. Use PHP 8.1 or later with mysqli, mbstring and OpenSSL.
+2. Create an empty database named lyc_reset_test and a new database user assigned only to it. hPanel may prefix both names. In phpMyAdmin select that empty database and import empty-reset-test-schema.sql. Keep this SQL file off the web.
+3. Upload upload-to-auth-test.zip to the staging document root and extract it there so that api and vendor are direct children of that root. Remove the uploaded ZIP after extraction. This upload contains only the API routes required for the reset test.
+4. In File Manager, create lyc-reset-test-private beside public_html, above all public folders. Save private-config.example.php there as auth.php. Enter the test database settings, the one allowed test customer's real email, and the Hostinger mailbox credentials. Use the mailbox address in both username and from_email. If the staging hostname differs, update staging_host and reset_url together. Leave allow_local_http false. Store the filled file only in the private folder on the test backend.
+5. Open https://auth-test.luckyyuna.com/api/auth/me.php on the phone. The expected JSON says Please sign in again (HTTP 401). That shows the staged PHP and schema are reachable. Open https://auth-test.luckyyuna.com/api/auth/reset_password.php to confirm the protected reset form loads. A browser opened without a reset token normally shows the invalid-link instruction.
+6. Sign out of the local Flutter build on the phone first so its token is cleared. Stop the running Flutter session. In Windows PowerShell run this from vsm_customer with the phone selected:
+
+& "C:\development\flutter\bin\flutter.bat" run --dart-define=API_BASE_URL=https://auth-test.luckyyuna.com/api
+
+7. Create a new staging customer using your configured test email. Sign in with the test password. Sign out and use Forgot Password with the same email. Open the mail in that inbox, choose a new Lucky Yuna password, then confirm the new password works on the staging app. Confirm the old password fails. Return to your usual local run configuration after testing.
+
+This staging bundle focuses on the password reset flow. Use the normal app setup for Google sign-in, booking and payment testing. The same staging API and database handle registration, login, recovery, and new-password validation. A test inbox must be accessible for the reset to complete.
+
+Local verification: 17 checks passed with synthetic customer data, a disposable MariaDB schema, and a local TLS SMTP receiver. This did not contact Hostinger or send real email.
